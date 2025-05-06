@@ -1,7 +1,9 @@
-import { createContext, useContext, useState, useRef } from "react";
+import { createContext, useContext, useState } from "react";
+import * as FileSystem from "expo-file-system";
 import { retriveUser } from "../service/auth";
 import { getProfile } from "../service/profile";
 import { downloadProfilePic } from "../service/fileDownload";
+import cacheFile from "../utils/cacheFiles";
 
 const GlobalContext = createContext(null);
 
@@ -15,16 +17,18 @@ export default function GlobalProvider({ children }) {
 
     const { data: profileData, error: profileError } = await getProfile(data.id);
     if (profileError) return { data: { id: data.id }, error: profileError };
-    setUserData({ id: data.id, ...profileData });
+    setUserData((prev)=>({ ...prev, ...profileData }));
     
     const { data: profilePicUri, error: profilePicError } = await downloadProfilePic(data.id);
     if(profilePicError?.message === 'Object not found') {
-      return { data: { id: data.id, ...profileData, profilePicUri: null }, error: null };
+      return { data: { id: data.id, ...profileData }, error: null };
     }
     else if (profilePicError) return { data: { id: data.id, ...profileData }, error: profilePicError };
     
-    setUserData({ id: data.id, ...profileData, profilePicUri: profilePicUri });
-    return { data: { id: data.id, ...profileData, profilePicUri: profilePicUri }, error: null };
+    const cacheUri = await cacheFile(profilePicUri, `profilePic.jpg`);
+
+    setUserData((prev)=>({ ...prev, profilePicUri: cacheUri+`?t=${Date.now()}` }));
+    return { data: { id: data.id, ...profileData, profilePicUri: cacheUri+`?t=${Date.now()}` }, error: null };
   };
 
   const contextValues = { userData, loadUser };

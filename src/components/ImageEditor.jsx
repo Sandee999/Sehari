@@ -254,6 +254,7 @@ export default function ImageEditor({ cacheFileName, saveToCacheFileName }) {
       const image = await imageContext.renderAsync();
       const result = await image.saveAsync({
         format: ImageManipulator.SaveFormat.JPEG,
+        quality: 0.3,
       });
       const tempFile = new File(result.uri);
       const destFile = new File(Paths.cache, saveToCacheFileName);

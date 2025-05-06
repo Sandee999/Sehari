@@ -65,29 +65,6 @@ function LoadFonts() {
   return [fontsLoaded, error];
 }
 
-// async function checkUser(loadUser, setRedirect) {
-//   const { data, error } = await loadUser();
-//   if(error && (error?.name === 'AuthSessionMissingError' || error?.name === 'AuthApiError') ){
-//     setRedirect('/login');
-//     return;
-//   }
-//   else if(error && error?.code==='PGRST116'){
-//     setRedirect('/register');
-//     return;
-//   }
-//   else if(!data) {
-//     setRedirect('/noInternet/root');
-//     return;
-//   }else {
-//     const hasNull = Object.values(data).some((value) => value === null);
-//     if (hasNull) {
-//       setRedirect('/register');
-//       return;
-//     }
-//     setRedirect('/home');
-//   }
-// }
-
 export default function Index() {
   const [redirect, setRedirect] = useState(null);
   const [cssLoaded, setCssLoaded] = useState(false);
