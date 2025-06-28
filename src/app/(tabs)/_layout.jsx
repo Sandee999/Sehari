@@ -8,6 +8,7 @@ export default function TabsLayout() {
       <Stack.Screen name='place/[id]' options={{ animation: 'ios_from_right' }} />
       <Stack.Screen name='item/[id]' options={{ animation: 'fade' }} />
       <Stack.Screen name='placeSearch' options={{ animation: 'fade'}} />
+      <Stack.Screen name='profile/[id]' options={{ animation: 'fade'}} />
     </Stack>
   );
 }

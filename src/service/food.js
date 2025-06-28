@@ -173,5 +173,5 @@ export async function getNearbyItems(user_id) {
     return data;
   }
 
-  return await getTopItems(cleanSearch);
+  return await getTopItems('');
 }

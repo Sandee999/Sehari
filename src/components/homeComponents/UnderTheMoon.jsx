@@ -13,20 +13,19 @@ export default function UnderTheMoon() {
   useEffect(()=>{
     const get = async() =>{
       const data = await getNearbyItems(userData.id);
-      console.log(data);
       setItems(data);
     }
     get();
   },[])
 
-  const renderItem = useCallback(({ item, index, extraData }) => {    
+  const renderItem = useCallback(({ item }) => {    
     const onPress = () => {
       router.push(`/item/${item.place_id}`);
     }
 
     return (
-      <TouchableOpacity activeOpacity={.8} onPress={onPress} style={{ width: 136, height: 240, marginLeft: 12, marginRight: 12, borderRadius: 10 }}>
-        <View style={{ width: 136, height: 240, alignItems: 'center', justifyContent: 'center', borderRadius: 10, backgroundColor: '#FFFFFF11' }}>
+      <TouchableOpacity activeOpacity={.8} onPress={onPress} style={{ width: 136, height: 250, marginLeft: 12, marginRight: 12, borderRadius: 10 }}>
+        <View style={{ width: 136, height: 250, alignItems: 'center', justifyContent: 'center', borderRadius: 10, backgroundColor: '#FFFFFF11' }}>
           <Image 
             source={{ uri: `${process.env.EXPO_PUBLIC_SUPABASE_URL || ''}/storage/v1/object/public/items/${item.item_id}/itemImage.jpg` }} 
             contentFit='cover' 
@@ -38,7 +37,7 @@ export default function UnderTheMoon() {
             <Text numberOfLines={2} ellipsizeMode='tail' className='w-full  text-[16px] text-white font-poppinsMedium'>{item.item_name}</Text>
             <Text numberOfLines={1} ellipsizeMode='tail' className='w-full text-[12px] text-white font-poppinsLight'>{item.place_name}</Text>
           </View>
-          <View style={{ width: 136, height: 50, justifyContent: 'flex-end', alignItems: 'flex-end', paddingHorizontal: 5 }}>
+          <View style={{ width: 136, justifyContent: 'flex-end', alignItems: 'flex-end', paddingHorizontal: 5 }}>
             <Text className='w-full text-[16px] text-white font-poppinsMedium'>₹{item.item_price}</Text>
           </View>
         </View>

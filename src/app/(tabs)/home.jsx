@@ -18,7 +18,7 @@ export default function Index() {
   const scrollOffset = useScrollViewOffset(scrollViewRef);
 
   const [refresh, setRefresh] = useState({
-    "PicksForYou": true,
+    "PicksForYou": false,
   });
 
   const onRefresh = useCallback(() => {

@@ -9,9 +9,6 @@ import { BlurView } from 'expo-blur';
 import { Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-// Prevent the splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync();
-
 function LoadCss(setCssLoaded) {
   cssInterop(Image, { className: 'style' });
   cssInterop(ImageBackground, { className: 'style' });
@@ -79,19 +76,15 @@ export default function Index() {
   }, [cssLoaded]);
 
   // Check user status and Hide splash screen when loaded
-  const { checkUser, loadUser } = useGlobalValues();
+  const { loadUser } = useGlobalValues();
   useEffect(() => {
-    const hideSplashScreen = async () => {
+    const loadUserFunction = async () => {
       if (fontsLoaded && cssLoaded) {
-        await loadUser().then(async()=> await SplashScreen.hideAsync());
+        await loadUser();
       }
     };
-    hideSplashScreen();
+    loadUserFunction();
   }, [fontsLoaded, cssLoaded]);
 
-  return (
-    <View className='w-full h-full items-center justify-center bg-black'>
-      <Text className='text-white text-xl'>Loading...</Text>
-    </View>
-  );
+  return null;
 }

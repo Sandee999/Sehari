@@ -1,12 +1,25 @@
 import '../global.css';
-import GlobalProvider, { useGlobalValues } from "../context/GlobalProvider";
+import { useEffect } from 'react';
 import { Stack } from "expo-router";
+import * as SplashScreen from 'expo-splash-screen';
 import { UserStatus } from '../utils/constants';
+import GlobalProvider, { useGlobalValues } from "../context/GlobalProvider";
+
+// Prevent the splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync();
 
 function ProtectedStack() {
-  const { userStatus, userData } = useGlobalValues();  
-  // console.log('USER STATUS: ', userStatus);
-  // console.log('USER DATA: ', userData);
+  const { userStatus } = useGlobalValues();  
+
+  // Hide the splash screen once we've finished loading
+  useEffect(() => {
+      const hideSplashScreen = async () => {
+        if (userStatus === UserStatus.IDLE || userStatus === UserStatus.LOADING) {
+          await SplashScreen.hideAsync();
+        }
+      };
+      hideSplashScreen();
+    }, [userStatus]);
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
