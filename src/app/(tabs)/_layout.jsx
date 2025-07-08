@@ -15,6 +15,8 @@ export default function TabsLayout() {
       <Stack.Protected guard={isCreator}>
         <Stack.Screen name='creatorAddPlace/[id]' options={{ animation: 'ios_from_right', presentation: 'transparentModal' }} />
         <Stack.Screen name='creatorAddItem/[id]' options={{ animation: 'ios_from_right', presentation: 'transparentModal' }} />
+        <Stack.Screen name='creatorAddPlaceImage/[id]' options={{ animation: 'ios_from_right', presentation: 'transparentModal' }} />
+        <Stack.Screen name='creatorAddItemImage/[id]' options={{ animation: 'ios_from_right', presentation: 'transparentModal' }} />
       </Stack.Protected>
     </Stack>
   );

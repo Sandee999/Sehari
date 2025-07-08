@@ -1,5 +1,5 @@
 import { View, Text, TouchableHighlight, ActivityIndicator } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getItemDetailsByPlace } from '../../service/food';
 import { FlashList } from '@shopify/flash-list';
 import { Image } from 'expo-image';
@@ -50,17 +50,17 @@ export default function Menu({ place_id }) {
   ),[]);
 
   const ListEmptyComponent = useCallback(() => {
-    if(loading) return(
+    if(loading && items.length !== 0) return(
       <View className={`w-[100vw]`} style={{ height: 240, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }} >
         <ActivityIndicator size='large' color='white' />
       </View>
-    )
+    );
 
     return(
       <View className={`w-[100vw]`} style={{ height: 240, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }} >
         <Text className='w-full text-center align-middle text-white font-poppinsMedium text-lg'>None found</Text>
       </View>
-    )
+    );
   },[]);
 
   return (

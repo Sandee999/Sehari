@@ -79,7 +79,7 @@ export default function ProfilePicIndex() {
   const onSubmit = async() => {
     setLoading(true);
     if(new File(uri).exists){
-      const { data, error } = await uploadProfilePic(userData.id, uri);
+      const { error } = await uploadProfilePic(userData.id, uri);
       if(error) {
         Alert.alert('Error in uploading', error.message);
         setLoading(false);

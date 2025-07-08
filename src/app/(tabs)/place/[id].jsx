@@ -82,6 +82,11 @@ export default function Place() {
               horizontal
               pagingEnabled
             />
+            {isCreator &&
+            <TouchableOpacity activeOpacity={0.9} onPress={()=>router.push(`/creatorAddPlaceImage/${id}`)} className={`absolute bottom-5 right-5 z-10 bg-black rounded-xl opacity-60`} >
+              <Text className={`px-2 py-1 text-white font-poppinsRegular text-sm`}>+ Add Image</Text>
+            </TouchableOpacity>
+            }
           </View>
           <View className={`w-full`}>
             <View className={`flex-row px-4 pt-4`}>
@@ -108,7 +113,7 @@ export default function Place() {
                 <Text className={`align-middle text-white font-poppinsRegular text-lg`}>Share</Text>
               </TouchableOpacity>
             </View>
-            {place_details.place_address && <Text className={`w-[80vw] p-4 text-white font-poppinsRegular text-lg`}>{'📍 '}{place_details.place_address}</Text>}
+            {place_details.place_address && <Text className={`w-[80vw] p-4 text-white font-poppinsRegular text-justify text-lg`}>{'📍 '}{place_details.place_address}</Text>}
             <View className={`w-[80vw] self-center h-[1px] my-5`}>
               <LinearGradient colors={['#000000', '#FFFFFF', '#000000']} className={`absolute top-0 bottom-0 left-0 right-0`} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} />
             </View>
@@ -116,12 +121,12 @@ export default function Place() {
           <Menu place_id={place_details.place_id} />
         </ScrollView>
         {isCreator &&
-          <TouchableOpacity onPress={() => router.push(`/creatorAddItem/${id}`)} className={`absolute bottom-8 right-8 w-[50px] h-[50px] items-center justify-center bg-blue-500 rounded-full`}>
-            <Image source={require('../../../assets/home/add.png')} contentFit='contain' className={`w-[30px] h-[30px]`} />
+          <TouchableOpacity activeOpacity={0.8} onPress={() => router.push(`/creatorAddItem/${id}`)} className={`absolute bottom-8 right-8 bg-black rounded-xl border-[1px] border-white`}>
+            <Text className={`px-3 py-2 text-white font-poppinsSemiBold text-lg`}>+ Add Item</Text>
           </TouchableOpacity>
         }
       </SafeAreaView>
       <StatusBar animated style='light' hidden={false} />
     </>
-  )
+  );
 }
