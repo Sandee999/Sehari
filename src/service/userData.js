@@ -145,3 +145,32 @@ export async function setUserRating(user_id, item_id, rating) {
 
   return { data: reviewData, error: reviewError };
 }
+
+export async function getAllUserItemRatings(user_id, lowerBound, upperBound) {
+  const { data, error } = await supabase
+    .from('user_item_rating')
+    .select(`
+      item_id,
+      user_item_rating,
+      user_item_review,
+      created_at,
+      item_details (
+        item_name,
+        item_price,
+        item_rating,
+        place_details (
+          place_name,
+          place_type,
+          place_description,
+          place_opening_hours,
+          place_address,
+          place_rating
+        )
+      )
+    `)
+    .eq('user_id', user_id)
+    .order('created_at', { ascending: false })
+    .range(lowerBound, upperBound);
+
+  return { data, error };
+}

@@ -42,7 +42,6 @@ export default function Item() {
 
   // For Reviews
   const [reviews, setReviews] = useState([]);
-  useEffect(()=>console.log(reviews),[reviews]);
   const limit = 10;
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);

@@ -6,8 +6,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useGlobalValues } from '../../../context/GlobalProvider'
 import { getProfile } from '../../../service/profile';
 import { Image } from 'expo-image';
-import { setCreator } from '../../../service/userData';
+import { getIfCreator, setCreator } from '../../../service/userData';
 import ProfilePicView from '../../../components/ProfilePicView';
+import Reviews from '../../../components/profileComponents/Reviews';
 
 export default function Profile() {
   const { id } = useLocalSearchParams();
@@ -16,6 +17,7 @@ export default function Profile() {
   const isUser = id === userData.id;
   const [isCreator, setIsCreator] = useState(false);
   const [data, setData] = useState(null);
+  const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(()=>console.log(data),[data]);
 
@@ -28,6 +30,9 @@ export default function Profile() {
       const get = async() => {
         const data = await getProfile(id);
         setData(data);
+        const x = await getIfCreator(id);
+        console.log(x);
+        setIsCreator(x.data.is_creator);
       }
       get();
     }
@@ -75,9 +80,6 @@ export default function Profile() {
             {isCreator && <Text className='text-lg font-poppinsMedium text-[#D9D9D9]'>Content Creator</Text> }
           </View>
         </View>
-        <View className='w-full'>
-          <Text className='text-xl text-white font-josefinRegular mx-6'>{data?.taste}</Text>
-        </View>
         {isUser &&
           <View className='w-full flex-wrap flex-row justify-evenly items-center'>
             {isCreator ?
@@ -85,9 +87,9 @@ export default function Profile() {
                 <TouchableOpacity onPress={onAddPlace} className={`px-3 py-1 my-3 border-[1px] border-white rounded-xl`}>
                   <Text className='text-base text-white font-poppinsMedium'>+ Add a Place</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className={`px-3 py-1 my-3 border-[1px] border-white rounded-xl`}>
+                {/* <TouchableOpacity className={`px-3 py-1 my-3 border-[1px] border-white rounded-xl`}>
                   <Text className='text-base text-white font-poppinsMedium'>📹 Make a Reel</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </>
               : 
               <TouchableOpacity onPress={onBecomeCreator} className={`px-3 py-1 border-[1px] border-white rounded-xl`}>
@@ -98,11 +100,16 @@ export default function Profile() {
         }
         <View className='w-full h-[1px] bg-[#D9D9D9] opacity-10' />
         <View className='w-full mt-4 flex-row justify-evenly'>
-          <Text className='text-lg text-white font-poppinsMedium mx-6'>About</Text>
-          <Text className='text-xl underline text-white font-poppinsMedium'>Reviews</Text>
+          <TouchableOpacity onPress={() => setTabIndex(0)} disabled={tabIndex == 0} className={`w-[50vw] items-center`}>
+            <Text className={`py-1 ${tabIndex == 0 ?'text-xl underline' : 'text-lg'} text-white font-poppinsMedium`}>About</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setTabIndex(1)} disabled={tabIndex == 1} className={`w-[50vw] items-center`}>
+          <Text className={`py-1 ${tabIndex == 1 ?'text-xl underline' : 'text-lg'} text-white font-poppinsMedium`}>Reviews</Text>
+          </TouchableOpacity>
         </View>
         <View className='w-full flex-1'>
-          
+          { tabIndex == 0 && <Text className='text-xl text-white font-josefinRegular m-6'>{'    '}{data?.taste}</Text>}
+          { tabIndex == 1 && <Reviews id={id} />}
         </View>
       </ScrollView>
       <StatusBar style='light' hidden={false} />
