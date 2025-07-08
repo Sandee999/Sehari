@@ -152,12 +152,20 @@ export default function Item() {
     <>
       <SafeAreaView className='w-full h-full bg-black'>
         <Animated.ScrollView style={{ opacity: opacity }} className='w-full flex-grow-[1] z-0'>
-          <Image 
-            source={{ uri: `${process.env.EXPO_PUBLIC_SUPABASE_URL || ''}/storage/v1/object/public/items/${id}/itemPic.jpg` }} 
-            contentFit='cover'
-            className='w-[100vw] h-[40vh]'
-            placeholder={require('../../../assets/placeholder-image.webp')}
-          />
+          <View>
+            <Image 
+              source={{ uri: `${process.env.EXPO_PUBLIC_SUPABASE_URL || ''}/storage/v1/object/public/items/${id}/itemPic.jpg` }} 
+              contentFit='cover'
+              className='w-[100vw] h-[40vh]'
+              placeholder={require('../../../assets/placeholder-image.webp')}
+              placeholderContentFit='cover'
+            />
+            {userData.isCreator &&
+              <TouchableOpacity activeOpacity={0.9} onPress={()=>router.push(`/creatorAddItemImage/${id}`)} className={`absolute bottom-5 right-5 z-10 bg-black rounded-xl opacity-60`} >
+                <Text className={`px-2 py-1 text-white font-poppinsRegular text-sm`}>+ Add Image</Text>
+              </TouchableOpacity>
+            }
+          </View>
           <View className={`flex-row px-4 pt-4`}>
             <Text className={`w-[80vw] text-white font-poppinsSemiBold text-2xl`}>{itemDetails.item_name}</Text>
             {itemDetails.item_rating && <Text className={`w-[45px] h-[25px] bg-[#2D1D90] rounded-xl align-middle text-center text-white font-poppinsSemiBold text-lg`}>{"\u2605 "+itemDetails.item_rating}</Text>}
