@@ -97,7 +97,7 @@ export default function PicksForYou({ refresh, setRefresh }) {
     </View>
   )
 
-  return (
+  return useCallback((
     <View className={`w-full`} style={{ marginTop: height * 0.45 - (insets.top+110) }}>
       <View className={`w-full flex-row items-center gap-5 px-2`} style={{ height: 70}}>
         <View style={{ height: 1, flexGrow: 1 }}>
@@ -121,5 +121,5 @@ export default function PicksForYou({ refresh, setRefresh }) {
         />
       </View>
     </View>
-  )
+  ),[places, imageSources, leastPrices]);
 }

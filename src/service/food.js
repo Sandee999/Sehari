@@ -1,5 +1,25 @@
 import supabase from "./supabase";
 
+export async function addPlace({ place_name, place_type, place_description, place_address, place_location, place_opening_hours }) {
+
+  const { data, error } = await supabase
+    .from('place_details')
+    .insert([{ place_name, place_type, place_description, place_address, place_location, place_opening_hours }])
+    .select();
+
+  return { data, error };
+}
+
+export async function addItem({ item_name, item_price, place_id }) {
+
+  const { data, error } = await supabase
+    .from('item_details')
+    .insert([{ item_name, item_price, place_id }])
+    .select();
+
+  return { data, error };
+}
+
 export async function getPlaceDetails(place_id) {
 
   const { data, error } = await supabase

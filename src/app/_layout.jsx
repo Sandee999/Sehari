@@ -9,7 +9,7 @@ import GlobalProvider, { useGlobalValues } from "../context/GlobalProvider";
 SplashScreen.preventAutoHideAsync();
 
 function ProtectedStack() {
-  const { userStatus } = useGlobalValues();  
+  const { userStatus } = useGlobalValues();
 
   // Hide the splash screen once we've finished loading
   useEffect(() => {

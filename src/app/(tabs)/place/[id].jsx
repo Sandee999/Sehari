@@ -11,6 +11,7 @@ import { getPlaceDetails } from '../../../service/food';
 import Menu from '../../../components/placeComponents/menu';
 import { wkbToCoords } from '../../../utils/location/wkb-coordinates';
 import * as Linking from 'expo-linking';
+import { useGlobalValues } from '../../../context/GlobalProvider';
 
 async function sharePlace(pageId) {
   const url = Linking.createURL(`page/${pageId}`);
@@ -30,6 +31,7 @@ export default function Place() {
   const [place_details, setPlaceDetails] = useState(null); 
   const [placeImageSources, setPlaceImageSources] = useState([]);
   const [coordinates, setCoordinates] = useState({});
+  const { userData: { isCreator } } = useGlobalValues();
 
   useEffect(()=>{
     const get = async() =>{
@@ -113,6 +115,11 @@ export default function Place() {
           </View>
           <Menu place_id={place_details.place_id} />
         </ScrollView>
+        {isCreator &&
+          <TouchableOpacity onPress={() => router.push(`/creatorAddItem/${id}`)} className={`absolute bottom-8 right-8 w-[50px] h-[50px] items-center justify-center bg-blue-500 rounded-full`}>
+            <Image source={require('../../../assets/home/add.png')} contentFit='contain' className={`w-[30px] h-[30px]`} />
+          </TouchableOpacity>
+        }
       </SafeAreaView>
       <StatusBar animated style='light' hidden={false} />
     </>

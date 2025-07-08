@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useGlobalValues } from '../../context/GlobalProvider';
 import getUserLocation from '../../utils/location/getUserLocation';
 import reverseGeocode from '../../utils/location/reverseGeocode';
@@ -8,7 +7,6 @@ import ProfilePicView from '../ProfilePicView';
 
 
 export default function Header() {
-  const insets = useSafeAreaInsets();
   const { userData, setUserLocation } = useGlobalValues();
   const [userGeocodedAddress, setUserGeocodedAddress] = useState(null);
   
@@ -23,7 +21,7 @@ export default function Header() {
   }, []);
 
   return(
-    <View className={`w-full px-3 flex-row items-center`} style={{ height: 70, marginTop: insets.top }}>
+    <View className={`w-full px-3 flex-row items-center`} style={{ height: 70 }}>
       <View style={{ width: 45, height: 45, borderRadius: 25, backgroundColor: '#FFFFFF33', overflow: 'hidden' }}>
         <ProfilePicView userId={userData.id} />
       </View>

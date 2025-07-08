@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { Image, ImageBackground } from 'expo-image';
 import { VideoView } from 'expo-video';
 import { cssInterop } from 'nativewind';
 import { useGlobalValues } from '../context/GlobalProvider';
 import { BlurView } from 'expo-blur';
-import { Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 function LoadCss(setCssLoaded) {

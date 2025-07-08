@@ -7,8 +7,6 @@ export function wkbToCoords(hex) {
     view.setUint8(i / 2, parseInt(hex.substr(i, 2), 16));
   }
 
-  console.log(view);
-
   // Little endian
   const littleEndian = true;
 

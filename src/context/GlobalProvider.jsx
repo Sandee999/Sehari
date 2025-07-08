@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { UserStatus } from "../utils/constants";
 import { retriveUser } from "../service/auth";
 import { getProfile } from "../service/profile";
-import { updateUserLocation } from "../service/userData";
+import { getIfCreator, updateUserLocation } from "../service/userData";
 
 const GlobalContext = createContext(null);
 
@@ -33,7 +33,13 @@ export default function GlobalProvider({ children }) {
         return;
       }
 
-      setUserData({ id: retrivedUserData.id, ...profileData });
+      const { data: isCreator, error } = await getIfCreator(retrivedUserData.id);
+
+      if(error) {
+        throw error;
+      }
+
+      setUserData({ id: retrivedUserData.id, ...profileData, isCreator: isCreator.is_creator });
       setUserStatus(UserStatus.LOGGED_IN);
     } catch (error) {
       setUserStatus(UserStatus.NO_INTERNET);
