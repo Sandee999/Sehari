@@ -5,6 +5,7 @@ import { Image } from 'expo-image';
 import { FlashList } from '@shopify/flash-list';
 import { getNearbyItems } from '../../service/food';
 import { useGlobalValues } from '../../context/GlobalProvider';
+import { router } from 'expo-router';
 
 export default function UnderTheMoon() {
   const { userData } = useGlobalValues();
@@ -20,7 +21,7 @@ export default function UnderTheMoon() {
 
   const renderItem = useCallback(({ item }) => {    
     const onPress = () => {
-      router.push(`/item/${item.place_id}`);
+      router.push(`/item/${item.item_id}`);
     }
 
     return (
